@@ -9,19 +9,19 @@ import org.springframework.batch.repeat.RepeatStatus;
 
 public class DemoTaskTwo implements Tasklet {
 
-	private static Logger LOG = LoggerFactory.getLogger(DemoTaskTwo.class);
+	private static Logger logger = LoggerFactory.getLogger(DemoTaskTwo.class);
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		// TODO Auto-generated method stub
 		
-        LOG.info("DemoTaskTwo start..");
+        logger.info("DemoTaskTwo start..");
         
         for (int i = 0; i < 10; ++i) {
-            LOG.info("DemoTaskTwo: {}", i);
+            logger.info("DemoTaskTwo: {}", i);
         }
 
-        LOG.info("DemoTaskTwo finished..");
+        logger.info("DemoTaskTwo finished..");
 		
 		return RepeatStatus.FINISHED;
 	}

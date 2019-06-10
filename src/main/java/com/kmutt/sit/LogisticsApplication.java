@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class LogisticsApplication implements CommandLineRunner {
 	
-	private static Logger LOG = LoggerFactory.getLogger(LogisticsApplication.class);
+	private static Logger logger = LoggerFactory.getLogger(LogisticsApplication.class);
 	
     @Autowired
     JobLauncher jobLauncher;
@@ -24,23 +24,25 @@ public class LogisticsApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-        LOG.info("STARTING THE APPLICATION");
+        logger.info("STARTING THE APPLICATION");
         
         SpringApplication.run(LogisticsApplication.class, args);
         
-        LOG.info("APPLICATION FINISHED");
+        logger.info("APPLICATION FINISHED");
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-        LOG.info("EXECUTING : command line runner");
+        logger.info("Job: running..");
         
         JobParameters params = new JobParametersBuilder()
                 .addString("JobID", String.valueOf(System.currentTimeMillis()))
                 .toJobParameters();
         
 		jobLauncher.run(job, params);
+		
+        logger.info("Job: done..");
 	}
 
 }

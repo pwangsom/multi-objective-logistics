@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "name.university",
+    "type": "java.lang.String",
+    "description": "A description for 'name.university'"
+  },
+  {
+    "name": "name.school",
+    "type": "java.lang.String",
+    "description": "A description for 'name.school'"
+  }
+]}
