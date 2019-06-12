@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.kmutt.sit.batch.tasks.ConfigReader;
-import com.kmutt.sit.batch.tasks.DemoTaskTwo;
+import com.kmutt.sit.batch.tasks.GeneticAlgorithmProcessor;
+import com.kmutt.sit.batch.tasks.DatabaseReader;
+import com.kmutt.sit.jpa.respositories.PlayerRepository;
 
 @Configuration
 @EnableBatchProcessing
@@ -29,21 +31,26 @@ public class BatchConfiguration {
     
     @Autowired
     private ConfigReader configReader;
+    
+
+    @Autowired
+    private PlayerRepository playerRepository;
      
     @Bean
     public Job processJob(){
-    	logger.info("processJob()");
+    	logger.info("processJob(): ...");
     	
         return jobs.get("processJob")
                 .incrementer(new RunIdIncrementer())
                 .start(readConfigProperties())
-                .next(stepTwo())
+                .next(retrivePlayers())
+                .next(processGeneticAlgorithm())
                 .build();
     }
     
     @Bean
     public Step readConfigProperties(){
-    	logger.info("readConfigProperties()");
+    	logger.info("readConfigProperties(): ...");
     	
         return steps.get("Step-01")
                 .tasklet(configReader)
@@ -51,12 +58,21 @@ public class BatchConfiguration {
     }
      
     @Bean
-    public Step stepTwo(){
-    	logger.info("stepTwo()");
+    public Step retrivePlayers(){
+    	logger.info("retrivePlayers(): ...");
     	
-        return steps.get("Step-01")
-                .tasklet(new DemoTaskTwo())
+        return steps.get("Step-02")
+                .tasklet(new DatabaseReader(playerRepository))
                 .build();
     }  
 
+    @Bean
+    public Step processGeneticAlgorithm(){
+    	logger.info("ProcessGeneticAlgorithm(): ...");
+    	
+        return steps.get("Step-03")
+                .tasklet(new GeneticAlgorithmProcessor())
+                .build();
+    }  
+    
 }

@@ -25,7 +25,7 @@ public class Player {
 
 	//uni-directional many-to-one association to Team
 	@ManyToOne
-	@JoinColumn(name="team")
+	@JoinColumn(name="team_id")
 	private Team team;
 
 	public Player() {
