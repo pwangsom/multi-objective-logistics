@@ -31,10 +31,10 @@ public class BatchConfiguration {
     private ConfigReader configReader;
      
     @Bean
-    public Job demoJob(){
-    	logger.info("demoJob()");
+    public Job processJob(){
+    	logger.info("processJob()");
     	
-        return jobs.get("demoJob")
+        return jobs.get("processJob")
                 .incrementer(new RunIdIncrementer())
                 .start(readConfigProperties())
                 .next(stepTwo())
@@ -45,7 +45,7 @@ public class BatchConfiguration {
     public Step readConfigProperties(){
     	logger.info("readConfigProperties()");
     	
-        return steps.get("stepOne")
+        return steps.get("Step-01")
                 .tasklet(configReader)
                 .build();
     }
@@ -54,7 +54,7 @@ public class BatchConfiguration {
     public Step stepTwo(){
     	logger.info("stepTwo()");
     	
-        return steps.get("stepTwo")
+        return steps.get("Step-01")
                 .tasklet(new DemoTaskTwo())
                 .build();
     }  
