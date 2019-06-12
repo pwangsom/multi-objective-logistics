@@ -37,6 +37,8 @@ public class DatabaseReader implements Tasklet {
         } else {
             logger.info("RetrivePlayer: not found!");
         }
+        
+        // List<Player> a = players.stream().filter(p -> p.getFirstName().equalsIgnoreCase("Mohamed")).collect(Collectors.toList());
 
         logger.info("RetrivePlayer: finished..");
 		
