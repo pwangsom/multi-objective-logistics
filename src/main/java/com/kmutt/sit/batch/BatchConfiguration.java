@@ -13,9 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.kmutt.sit.batch.tasks.ConfigReader;
-import com.kmutt.sit.batch.tasks.GeneticAlgorithmProcessor;
 import com.kmutt.sit.batch.tasks.DatabaseReader;
-import com.kmutt.sit.jpa.respositories.PlayerRepository;
+import com.kmutt.sit.batch.tasks.GeneticAlgorithmProcessor;
 
 @Configuration
 @EnableBatchProcessing
@@ -34,7 +33,7 @@ public class BatchConfiguration {
     
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private DatabaseReader databaseReader;
      
     @Bean
     public Job processJob(){
@@ -62,7 +61,7 @@ public class BatchConfiguration {
     	logger.info("retrivePlayers(): ...");
     	
         return steps.get("Step-02")
-                .tasklet(new DatabaseReader(playerRepository))
+                .tasklet(databaseReader)
                 .build();
     }  
 
