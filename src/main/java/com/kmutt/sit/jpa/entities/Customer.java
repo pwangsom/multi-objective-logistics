@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(schema = "public", name = "customer")
 public class Customer {
@@ -21,13 +24,6 @@ public class Customer {
     
     private String lastName;
 
-    protected Customer() {}
-
-    public Customer(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     @Override
     public String toString() {
         return String.format(
@@ -37,16 +33,5 @@ public class Customer {
 
 // end::sample[]
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
 }
 
