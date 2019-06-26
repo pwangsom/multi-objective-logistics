@@ -107,7 +107,7 @@ public class DatabaseReader implements Tasklet {
         if(shipmentOpt.isPresent()) {            
             logger.info("findByShipmentKey(): found!");
             DhlShipment shipment = shipmentOpt.get();
-            logger.info(shipment.getCourierId() + " ");
+            logger.info(shipment.getCourierId() + " " + shipment.getAwbBooking());
         } else {
             logger.info("findByShipmentKey(): not found!");
         }

@@ -76,7 +76,7 @@ public class DhlShipment  {
 	@Column(name="delivery_type")
 	private String deliveryType;
 
-	private Object geom;
+	//private Object geom;
 
 	private BigDecimal lat;
 
