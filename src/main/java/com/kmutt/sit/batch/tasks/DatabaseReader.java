@@ -12,8 +12,10 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kmutt.sit.jpa.entities.DhlShipment;
 import com.kmutt.sit.jpa.entities.Player;
 import com.kmutt.sit.jpa.entities.Team;
+import com.kmutt.sit.jpa.respositories.DhlShipmentRepository;
 import com.kmutt.sit.jpa.respositories.PlayerRepository;
 import com.kmutt.sit.jpa.respositories.TeamRepository;
 
@@ -28,10 +30,13 @@ public class DatabaseReader implements Tasklet {
 	@Autowired
 	private TeamRepository teamRepository;
 	
+	@Autowired
+	private DhlShipmentRepository shipmentRepository;
+	
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		// TODO Auto-generated method stub
-        logger.info("RetrivePlayer: start..");  
+        logger.info("DatabaseReader: start..");  
         logger.info(""); 
         logger.info("demo: findAll()"); 
         logger.info(""); 
@@ -92,8 +97,22 @@ public class DatabaseReader implements Tasklet {
         } else {
             logger.info("findByTeam(): not found!");
         }
+        
+        logger.info(""); 
+        logger.info("demo: findByShipmentKey()"); 
+        logger.info("");
+        
+        Optional<DhlShipment> shipmentOpt = shipmentRepository.findById(32);
+        
+        if(shipmentOpt.isPresent()) {            
+            logger.info("findByShipmentKey(): found!");
+            DhlShipment shipment = shipmentOpt.get();
+            logger.info(shipment.getCourierId() + " ");
+        } else {
+            logger.info("findByShipmentKey(): not found!");
+        }
 
-        logger.info("RetrivePlayer: finished..");
+        logger.info("DatabaseReader: finished..");
 		
 		return RepeatStatus.FINISHED;
 	}
