@@ -23,14 +23,14 @@ public class ConfigReader implements Tasklet {
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		// TODO Auto-generated method stub
 		
-        logger.info("DemoTaskOne start..");
+        logger.info("ConfigReader: start..");
         
         logger.info("");
         logger.info("University: " + configs.getUniversity());
         logger.info("School    : " + configs.getSchool());
         logger.info("");
 
-        logger.info("DemoTaskOne finished..");
+        logger.info("ConfigReader: finished..");
 		
 		return RepeatStatus.FINISHED;
 	}

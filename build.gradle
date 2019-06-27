@@ -32,6 +32,7 @@ bootJar {
 
 repositories {
     mavenCentral()
+	mavenLocal()
 }
 
 sourceCompatibility = 1.8
@@ -43,6 +44,7 @@ dependencies {
 	//runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	runtimeOnly('org.postgresql:postgresql')
 	compileOnly('org.projectlombok:lombok:1.18.8')
+	compile ('org.uma.jmetal:jmetal:5.6-SNAPSHOT')
 	
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	
