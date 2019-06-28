@@ -6,20 +6,19 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.kmutt.sit.properties.DefaultProperties;
 
 @Service
 public class PropertiesReader implements Tasklet {	
 
 	private static Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
 	
-	@Autowired
-	private DefaultProperties defaultProps;
+    @Value("${app.profile}")
+    private String profile;
+    
+    @Value("${app.develop}")
+    private String develop;
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
@@ -27,24 +26,13 @@ public class PropertiesReader implements Tasklet {
 		
         logger.info("PropertiesReader: start..");
         
-        String propertyFile = chunkContext.getStepContext().getStepExecution().getJobParameters().getString("PropertyFile");
-        
         logger.info("");
-        logger.info("Propety File: " + propertyFile);
-        logger.info("Profile     : " + defaultProps.getProfile());
-        logger.info("Developer   : " + defaultProps.getDevelop());
+        logger.info("Profile      : " + profile);
+        logger.info("Developer    : " + develop);
         logger.info("");
 
         logger.info("PropertiesReader: finished..");
 		
 		return RepeatStatus.FINISHED;
-	}
-	
-	private PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(String fileName) {
-	    PropertySourcesPlaceholderConfigurer properties = new PropertySourcesPlaceholderConfigurer();
-	    properties.setLocation(new FileSystemResource(fileName));
-	    properties.setIgnoreResourceNotFound(false);
-	    return properties;
-	}
-
+	}	
 }

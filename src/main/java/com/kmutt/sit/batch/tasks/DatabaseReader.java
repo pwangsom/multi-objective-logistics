@@ -10,6 +10,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.kmutt.sit.jpa.entities.DhlShipment;
@@ -32,6 +33,9 @@ public class DatabaseReader implements Tasklet {
 	
 	@Autowired
 	private DhlShipmentRepository shipmentRepository;
+	
+    @Value("${shipment.id}")
+    private String shipmentId;
 	
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
@@ -102,7 +106,7 @@ public class DatabaseReader implements Tasklet {
         logger.info("demo: findByShipmentKey()"); 
         logger.info("");
         
-        Optional<DhlShipment> shipmentOpt = shipmentRepository.findById(32);
+        Optional<DhlShipment> shipmentOpt = shipmentRepository.findById(Integer.valueOf(shipmentId));
         
         if(shipmentOpt.isPresent()) {            
             logger.info("findByShipmentKey(): found!");

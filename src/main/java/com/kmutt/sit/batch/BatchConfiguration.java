@@ -42,14 +42,14 @@ public class BatchConfiguration {
         return jobs.get("processJob")
                 .incrementer(new RunIdIncrementer())
                 .start(readProperties())
-                //.next(retrivePlayers())
-                //.next(processGeneticAlgorithm())
+                .next(retrivePlayers())
+                .next(processGeneticAlgorithm())
                 .build();
     }
     
     @Bean
     public Step readProperties(){
-    	logger.info("readProperties(): ...");
+    	// logger.info("readProperties(): ...");
     	
         return steps.get("Step-01")
                 .tasklet(propertiesReader)
@@ -58,7 +58,7 @@ public class BatchConfiguration {
      
     @Bean
     public Step retrivePlayers(){
-    	logger.info("retrivePlayers(): ...");
+    	// logger.info("retrivePlayers(): ...");
     	
         return steps.get("Step-02")
                 .tasklet(databaseReader)
@@ -67,7 +67,7 @@ public class BatchConfiguration {
 
     @Bean
     public Step processGeneticAlgorithm(){
-    	logger.info("ProcessGeneticAlgorithm(): ...");
+    	// logger.info("ProcessGeneticAlgorithm(): ...");
     	
         return steps.get("Step-03")
                 .tasklet(new GeneticAlgorithmProcessor())
