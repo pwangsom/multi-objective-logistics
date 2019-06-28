@@ -6,28 +6,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
+import lombok.Getter;
+
+@Getter
 @Configuration
-@PropertySource("classpath:config.properties")
-public class ConfigProperties {
+@PropertySource("classpath:default.properties")
+public class DefaultProperties {
 	
-    @Value("${name.university}")
-    private String university;
+    @Value("${app.profile}")
+    private String profile;
     
-    @Value("${name.school}")
-    private String school;
-
-	public String getUniversity() {
-		return university;
-	}
-
-	public String getSchool() {
-		return school;
-	}
+    @Value("${app.develop}")
+    private String develop;
     
     @Bean
-    public ConfigProperties configs() {
-    	ConfigProperties configs = new ConfigProperties();    	
-    	return configs;
+    public DefaultProperties defaultProps() {
+    	DefaultProperties defaultProps = new DefaultProperties();    	
+    	return defaultProps;
     }
 
     @Bean

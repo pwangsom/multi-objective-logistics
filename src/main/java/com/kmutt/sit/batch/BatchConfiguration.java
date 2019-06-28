@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.kmutt.sit.batch.tasks.ConfigReader;
+import com.kmutt.sit.batch.tasks.PropertiesReader;
 import com.kmutt.sit.batch.tasks.DatabaseReader;
 import com.kmutt.sit.batch.tasks.GeneticAlgorithmProcessor;
 
@@ -29,7 +29,7 @@ public class BatchConfiguration {
     private StepBuilderFactory steps;
     
     @Autowired
-    private ConfigReader configReader;
+    private PropertiesReader propertiesReader;
     
 
     @Autowired
@@ -41,18 +41,18 @@ public class BatchConfiguration {
     	
         return jobs.get("processJob")
                 .incrementer(new RunIdIncrementer())
-                .start(readConfigProperties())
-                .next(retrivePlayers())
-                .next(processGeneticAlgorithm())
+                .start(readProperties())
+                //.next(retrivePlayers())
+                //.next(processGeneticAlgorithm())
                 .build();
     }
     
     @Bean
-    public Step readConfigProperties(){
-    	logger.info("readConfigProperties(): ...");
+    public Step readProperties(){
+    	logger.info("readProperties(): ...");
     	
         return steps.get("Step-01")
-                .tasklet(configReader)
+                .tasklet(propertiesReader)
                 .build();
     }
      
