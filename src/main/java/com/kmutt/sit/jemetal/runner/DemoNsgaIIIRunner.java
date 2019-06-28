@@ -1,4 +1,4 @@
-package com.kmutt.sit.batch.jemetal.runner;
+package com.kmutt.sit.jemetal.runner;
 
 import java.util.List;
 

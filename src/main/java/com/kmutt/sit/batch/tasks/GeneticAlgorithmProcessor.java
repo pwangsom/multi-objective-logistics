@@ -7,7 +7,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import com.kmutt.sit.batch.jemetal.runner.DemoNsgaIIIRunner;
+import com.kmutt.sit.jemetal.runner.DemoNsgaIIIRunner;
 
 public class GeneticAlgorithmProcessor implements Tasklet {
 
