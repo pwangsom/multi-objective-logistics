@@ -26,6 +26,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 bootJar {
+	mainClassName = 'com.kmutt.sit.LogisticsApplication'
     baseName = 'multi-objective-logistics'
     version =  '0.0.1'
 }
