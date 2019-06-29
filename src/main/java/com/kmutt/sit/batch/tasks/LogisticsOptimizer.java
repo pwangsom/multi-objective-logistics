@@ -6,14 +6,18 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.kmutt.sit.jmetal.runner.DemoNsgaIIIRunner;
+import com.kmutt.sit.optimization.OptimizationManager;
 
-@Component
+@Service
 public class LogisticsOptimizer implements Tasklet {
 
 	private static Logger logger = LoggerFactory.getLogger(LogisticsOptimizer.class);
+	
+	@Autowired
+	private OptimizationManager optimizationManager;
 	
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
@@ -22,11 +26,9 @@ public class LogisticsOptimizer implements Tasklet {
         logger.info("LogisticsOptimizer: start....."); 
         
         String jobId = chunkContext.getStepContext().getStepExecution().getJobParameters().getString("JobID");
-        logger.info("Job ID: " + jobId);
         
-        DemoNsgaIIIRunner runner = new DemoNsgaIIIRunner();
-        runner.setup();
-        runner.execute();
+        optimizationManager.setJobId(jobId);
+        optimizationManager.opitmize();
         
         logger.info("LogisticsOptimizer: finished..");  
 		

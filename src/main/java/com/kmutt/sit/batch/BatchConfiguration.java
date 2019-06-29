@@ -1,4 +1,4 @@
-package com.kmutt.sit.configuration;
+package com.kmutt.sit.batch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +31,11 @@ public class BatchConfiguration {
     @Autowired
     private PropertiesReader propertiesReader;
     
-
     @Autowired
     private DatabaseReader databaseReader;
+    
+    @Autowired
+    private LogisticsOptimizer logisticsOptimizer;
      
     @Bean
     public Job processJob(){
@@ -64,7 +66,7 @@ public class BatchConfiguration {
     @Bean
     public Step optimizeShipmentLogistics(){    	
         return steps.get("Step-03")
-                .tasklet(new LogisticsOptimizer())
+                .tasklet(logisticsOptimizer)
                 .build();
     }  
     
