@@ -11,5 +11,8 @@ public interface DhlShipmentRepository extends JpaRepository<DhlShipment, Intege
 	
 	@Query("SELECT s FROM DhlShipment s WHERE actDt = ?1")
     List<DhlShipment> findByActDt(String actDt);
+	
+	@Query("SELECT DISTINCT actDt FROM DhlShipment")
+	List<String> findDistinctActDt();
 
 }
