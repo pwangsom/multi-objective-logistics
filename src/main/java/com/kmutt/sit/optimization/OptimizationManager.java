@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.kmutt.sit.jpa.entities.DhlShipment;
+
 import lombok.Setter;
 
 
@@ -29,8 +31,23 @@ public class OptimizationManager {
         List<String> shipmentDateList = optimizationHelper.retrieveShipmentDateList();
         
         logger.info(shipmentDateList.toString());
+        
+        shipmentDateList.stream().forEach(date ->{
+        	allocateDailyShipment(date);
+        });
 
         logger.info("OptimizationManager: finished..");  
+	}
+	
+	private void allocateDailyShipment(String shipmentDate) {
+
+        logger.info("allocateDailyShipment: start....."); 
+		
+		List<DhlShipment> shipmentList = optimizationHelper.retrieveDailyShipment(shipmentDate);
+		logger.debug("No. of Shipments: " + shipmentList.size());
+		
+
+        logger.info("allocateDailyShipment: finished..");  
 	}
 	
 	

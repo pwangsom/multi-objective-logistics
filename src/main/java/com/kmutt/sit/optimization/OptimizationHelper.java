@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.kmutt.sit.jpa.entities.DhlShipment;
 import com.kmutt.sit.jpa.respositories.DhlShipmentRepository;
 
 @Service
@@ -56,6 +57,10 @@ public class OptimizationHelper {
     	Collections.sort(this.shipmentDateList);
     	
     	return this.shipmentDateList;
+    }
+    
+    public List<DhlShipment> retrieveDailyShipment(String shipmentDate){
+    	return dhlShipmentRepository.findByActDt(shipmentDate);
     }
 
 }
