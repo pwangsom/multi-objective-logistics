@@ -34,58 +34,53 @@ public class DatabaseReader implements Tasklet {
 	@Autowired
 	private DhlShipmentRepository shipmentRepository;
 	
-    @Value("${shipment.id}")
-    private String shipmentId;
+    @Value("${shipment.month}")
+    private String shipmentMonth;
+    
+    @Value("${shipment.date}")
+    private String shipmentDate;
 	
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		// TODO Auto-generated method stub
         logger.info("DatabaseReader: start..");  
         logger.info(""); 
-        logger.info("demo: findAll()"); 
-        logger.info(""); 
         
         List<Player> players = playerRepository.findAll();
         
         if(!players.isEmpty()) {            
-            logger.info("findAll(): found!");
+            logger.debug("findAll(): found!");
             players.stream().forEach(p -> {
-            	logger.info(p.getFirstName() + " " + p.getLastName() + ": " + p.getTeam().getTeamName());
+            	logger.debug(p.getFirstName() + " " + p.getLastName() + ": " + p.getTeam().getTeamName());
             });
         } else {
-            logger.info("findAll(): not found!");
+            logger.debug("findAll(): not found!");
         }
 
-        logger.info(""); 
-        logger.info("demo: findById()"); 
-        logger.info(""); 
+        logger.debug(""); 
         
         Optional<Player> player1 = playerRepository.findById(1);
         
         if(player1.isPresent()) {
         	Player p = player1.get();
-        	logger.info(p.getFirstName() + " " + p.getLastName() + ": " + p.getTeam().getTeamName());
+        	logger.debug(p.getFirstName() + " " + p.getLastName() + ": " + p.getTeam().getTeamName());
         }
         
-        logger.info(""); 
-        logger.info("demo: findByFirstNameAndLastName()"); 
-        logger.info(""); 
+        logger.debug(""); 
         
         players.clear();
         players = playerRepository.findByFirstNameAndLastName("Sadio", "Mane");
         
         if(!players.isEmpty()) {            
-            logger.info("findByFirstNameAndLastName(): found!");
+            logger.debug("findByFirstNameAndLastName(): found!");
             players.stream().forEach(p -> {
-            	logger.info(p.getFirstName() + " " + p.getLastName() + ": " + p.getTeam().getTeamName());
+            	logger.debug(p.getFirstName() + " " + p.getLastName() + ": " + p.getTeam().getTeamName());
             });
         } else {
-            logger.info("findByFirstNameAndLastName(): not found!");
+            logger.debug("findByFirstNameAndLastName(): not found!");
         }
         
-        logger.info(""); 
-        logger.info("demo: findByTeam()"); 
-        logger.info(""); 
+        logger.debug(""); 
         
         players.clear();
         
@@ -94,28 +89,38 @@ public class DatabaseReader implements Tasklet {
         players = playerRepository.findByTeam(barca.get());
         
         if(!players.isEmpty()) {            
-            logger.info("findByTeam(): found!");
+            logger.debug("findByTeam(): found!");
             players.stream().forEach(p -> {
-            	logger.info(p.getFirstName() + " " + p.getLastName() + ": " + p.getTeam().getTeamName());
+            	logger.debug(p.getFirstName() + " " + p.getLastName() + ": " + p.getTeam().getTeamName());
             });
         } else {
-            logger.info("findByTeam(): not found!");
+            logger.debug("findByTeam(): not found!");
         }
         
-        logger.info(""); 
-        logger.info("demo: findByShipmentKey()"); 
-        logger.info("");
+        logger.debug(""); 
         
-        Optional<DhlShipment> shipmentOpt = shipmentRepository.findById(Integer.valueOf(shipmentId));
+        Optional<DhlShipment> shipmentOpt = shipmentRepository.findById(32);
         
         if(shipmentOpt.isPresent()) {            
-            logger.info("findByShipmentKey(): found!");
+            logger.debug("findByShipmentKey(): found!");
             DhlShipment shipment = shipmentOpt.get();
-            logger.info(shipment.getCourierId() + " " + shipment.getAwbBooking());
+            logger.debug(shipment.getPudRte() + " " + shipment.getCourierId() + " " + shipment.getAwbBooking());
         } else {
-            logger.info("findByShipmentKey(): not found!");
+            logger.debug("findByShipmentKey(): not found!");
+        }        
+
+        logger.debug(""); 
+        
+        List<DhlShipment> shipments = shipmentRepository.findByActDt(shipmentMonth + shipmentDate);
+        
+        if(!shipments.isEmpty()) {            
+            logger.debug("findByActDt(): found!");
+            logger.debug("Shipment size: " + shipments.size());
+        } else {
+            logger.debug("findByActDt(): not found!");
         }
 
+        logger.debug(""); 
         logger.info("DatabaseReader: finished..");
 		
 		return RepeatStatus.FINISHED;

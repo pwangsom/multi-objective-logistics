@@ -1,4 +1,4 @@
-package com.kmutt.sit.batch;
+package com.kmutt.sit.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.kmutt.sit.batch.tasks.PropertiesReader;
 import com.kmutt.sit.batch.tasks.DatabaseReader;
-import com.kmutt.sit.batch.tasks.GeneticAlgorithmProcessor;
+import com.kmutt.sit.batch.tasks.LogisticsOptimizer;
+import com.kmutt.sit.batch.tasks.PropertiesReader;
 
 @Configuration
 @EnableBatchProcessing
@@ -43,34 +43,28 @@ public class BatchConfiguration {
                 .incrementer(new RunIdIncrementer())
                 .start(readProperties())
                 .next(retrivePlayers())
-                .next(processGeneticAlgorithm())
+                .next(optimizeShipmentLogistics())
                 .build();
     }
     
     @Bean
-    public Step readProperties(){
-    	// logger.info("readProperties(): ...");
-    	
+    public Step readProperties(){    	
         return steps.get("Step-01")
                 .tasklet(propertiesReader)
                 .build();
     }
      
     @Bean
-    public Step retrivePlayers(){
-    	// logger.info("retrivePlayers(): ...");
-    	
+    public Step retrivePlayers(){    	
         return steps.get("Step-02")
                 .tasklet(databaseReader)
                 .build();
     }  
 
     @Bean
-    public Step processGeneticAlgorithm(){
-    	// logger.info("ProcessGeneticAlgorithm(): ...");
-    	
+    public Step optimizeShipmentLogistics(){    	
         return steps.get("Step-03")
-                .tasklet(new GeneticAlgorithmProcessor())
+                .tasklet(new LogisticsOptimizer())
                 .build();
     }  
     

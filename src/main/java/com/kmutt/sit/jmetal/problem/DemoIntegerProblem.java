@@ -1,4 +1,4 @@
-package com.kmutt.sit.jemetal.problem;
+package com.kmutt.sit.jmetal.problem;
 
 import java.util.ArrayList;
 import java.util.List;

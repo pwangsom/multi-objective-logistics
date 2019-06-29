@@ -1,4 +1,4 @@
-package com.kmutt.sit.jemetal.runner;
+package com.kmutt.sit.jmetal.runner;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-import com.kmutt.sit.jemetal.problem.DemoIntegerProblem;
+import com.kmutt.sit.jmetal.problem.DemoIntegerProblem;
 
 public class DemoNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 
