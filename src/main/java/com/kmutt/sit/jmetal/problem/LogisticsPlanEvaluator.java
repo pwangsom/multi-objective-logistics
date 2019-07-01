@@ -13,7 +13,6 @@ import org.uma.jmetal.solution.IntegerSolution;
 import com.kmutt.sit.jmetal.runner.LogisticsNsgaIIIHelper;
 import com.kmutt.sit.jpa.entities.DhlRoute;
 import com.kmutt.sit.jpa.entities.DhlShipment;
-import com.kmutt.sit.utilities.JavaUtils;
 
 import lombok.Getter;
 import lombok.Setter;
