@@ -19,11 +19,11 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-import com.kmutt.sit.jmetal.problem.DemoIntegerProblem;
+import com.kmutt.sit.jmetal.problem.LogisticsIntegerProblem;
 
-public class DemoNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
+public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 
-	private Logger logger = LoggerFactory.getLogger(DemoNsgaIIIIntegerRunner.class);
+	private Logger logger = LoggerFactory.getLogger(LogisticsNsgaIIIIntegerRunner.class);
 	
 	private Problem<IntegerSolution> problem;
 	private Algorithm<List<IntegerSolution>> algorithm;
@@ -34,14 +34,14 @@ public class DemoNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 	
 	private int maxIteration = 300;
 	
-	public DemoNsgaIIIIntegerRunner(int maxIteration) {
-		this();
-		this.maxIteration = maxIteration;
+	private LogisticsNsgaIIIHelper helper;
+	
+	public LogisticsNsgaIIIIntegerRunner(LogisticsNsgaIIIHelper helper) {
+		this.helper = helper;
 	}
 	
-	public DemoNsgaIIIIntegerRunner() {
-		
-		problem = new DemoIntegerProblem();
+	public void setRunnerParameter() {
+		problem = new LogisticsIntegerProblem(this.helper);
 		
 	    double crossoverProbability = 0.9 ;
 	    double crossoverDistributionIndex = 30.0 ;
@@ -51,7 +51,8 @@ public class DemoNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 	    double mutationDistributionIndex = 20.0 ;
 		mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-		selection = new BinaryTournamentSelection<IntegerSolution>();		
+		selection = new BinaryTournamentSelection<IntegerSolution>();
+		maxIteration = this.helper.getMaxIteration();
 	}
 	
 	public void execute() {

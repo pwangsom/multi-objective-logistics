@@ -8,30 +8,34 @@ import org.slf4j.LoggerFactory;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
+import com.kmutt.sit.jmetal.runner.LogisticsNsgaIIIHelper;
 import com.kmutt.sit.utilities.JavaUtils;
 
-public class DemoIntegerProblem extends AbstractIntegerProblem {
+public class LogisticsIntegerProblem extends AbstractIntegerProblem {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Logger logger = LoggerFactory.getLogger(DemoIntegerProblem.class);
+	private Logger logger = LoggerFactory.getLogger(LogisticsIntegerProblem.class);
+	private LogisticsNsgaIIIHelper helper;
 	
 	final private int NO_OBJECTIVES = 3;
 	
-	public DemoIntegerProblem() {
+	public LogisticsIntegerProblem(LogisticsNsgaIIIHelper helper) {
+		
+		this.helper = helper;
 		
 		// Length of chromosome is equal to a number of shipments
-		setNumberOfVariables(20);
+		setNumberOfVariables(this.helper.getShipmentList().size());
 
 		List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables());
 		List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables());
 		
 		// Values in chromosome can be ranging from 0 to number of routes - 1
-		int lower = 0;
-		int upper = 10 - 1;
+		int lower = 1;
+		int upper = this.helper.getRouteList().size();
 
 		for (int i = 0; i < getNumberOfVariables(); i++) {
 			lowerLimit.add(lower);

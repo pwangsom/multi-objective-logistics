@@ -9,8 +9,8 @@ import com.kmutt.sit.jpa.entities.DhlShipment;
 
 public interface DhlShipmentRepository extends JpaRepository<DhlShipment, Integer>{
 	
-	// @Query("SELECT s FROM DhlShipment s WHERE actDt = ?1")
     List<DhlShipment> findByActDt(String actDt);
+    List<DhlShipment> findByActDtAndCycleOperateAndVehicleTypeIn(String actDt, String CycleOperate, List<String> vehicleTypes);
 	
 	@Query("SELECT DISTINCT actDt FROM DhlShipment")
 	List<String> findDistinctActDt();

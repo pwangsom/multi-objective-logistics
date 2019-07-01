@@ -25,4 +25,8 @@ public class JavaUtils {
 		return r.nextInt((max - min) + 1) + min;
 	}
 	
+	
+	public static boolean between(int i, int minValueInclusive, int maxValueInclusive) {
+	    return (i >= minValueInclusive && i <= maxValueInclusive);
+	}
 }

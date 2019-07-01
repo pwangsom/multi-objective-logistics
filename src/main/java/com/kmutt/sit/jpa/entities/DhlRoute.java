@@ -47,5 +47,10 @@ public class DhlRoute {
 
 	@Column(name="vehicle_type")
 	private String vehicleType;
+	
+	@Override
+	public String toString() {
+		return String.format("routeId=%d, chromosomeId=%d, route=%s, vehicleType=%s, maxUtilization=%d", routeId, chromosomeId, route, vehicleType, maxUtilization);
+	}
 
 }

@@ -72,6 +72,9 @@ public class DhlShipment  {
 
 	@Column(name="customer_name")
 	private String customerName;
+	
+	@Column(name="cycle_operate")
+	private String cycleOperate;
 
 	@Column(name="delivery_type")
 	private String deliveryType;
