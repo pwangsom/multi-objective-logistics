@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PropertiesReader implements Tasklet {	
+public class PropertiesReaderDemo implements Tasklet {	
 
-	private static Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
+	private static Logger logger = LoggerFactory.getLogger(PropertiesReaderDemo.class);
 	
     @Value("${app.profile}")
     private String profile;

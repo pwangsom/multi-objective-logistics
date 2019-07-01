@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.kmutt.sit.batch.tasks.DatabaseReader;
+import com.kmutt.sit.batch.tasks.DatabaseReaderDemo;
 import com.kmutt.sit.batch.tasks.LogisticsOptimizer;
-import com.kmutt.sit.batch.tasks.PropertiesReader;
+import com.kmutt.sit.batch.tasks.PropertiesReaderDemo;
 
 @Configuration
 @EnableBatchProcessing
@@ -29,10 +29,10 @@ public class BatchConfiguration {
     private StepBuilderFactory steps;
     
     @Autowired
-    private PropertiesReader propertiesReader;
+    private PropertiesReaderDemo propertiesReaderDemo;
     
     @Autowired
-    private DatabaseReader databaseReader;
+    private DatabaseReaderDemo databaseReaderDemo;
     
     @Autowired
     private LogisticsOptimizer logisticsOptimizer;
@@ -52,14 +52,14 @@ public class BatchConfiguration {
     @Bean
     public Step readProperties(){    	
         return steps.get("Step-01")
-                .tasklet(propertiesReader)
+                .tasklet(propertiesReaderDemo)
                 .build();
     }
      
     @Bean
     public Step retrivePlayers(){    	
         return steps.get("Step-02")
-                .tasklet(databaseReader)
+                .tasklet(databaseReaderDemo)
                 .build();
     }  
 

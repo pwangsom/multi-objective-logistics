@@ -1,5 +1,6 @@
 package com.kmutt.sit.batch.tasks;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,17 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.kmutt.sit.jpa.entities.DhlRoute;
 import com.kmutt.sit.jpa.entities.DhlShipment;
 import com.kmutt.sit.jpa.entities.Player;
 import com.kmutt.sit.jpa.entities.Team;
+import com.kmutt.sit.jpa.respositories.DhlRouteRespository;
 import com.kmutt.sit.jpa.respositories.DhlShipmentRepository;
 import com.kmutt.sit.jpa.respositories.PlayerRepository;
 import com.kmutt.sit.jpa.respositories.TeamRepository;
 
 @Service
-public class DatabaseReader implements Tasklet {
+public class DatabaseReaderDemo implements Tasklet {
 
-	private static Logger logger = LoggerFactory.getLogger(DatabaseReader.class);
+	private static Logger logger = LoggerFactory.getLogger(DatabaseReaderDemo.class);
 	
 	@Autowired
 	private PlayerRepository playerRepository;
@@ -33,6 +36,9 @@ public class DatabaseReader implements Tasklet {
 	
 	@Autowired
 	private DhlShipmentRepository shipmentRepository;
+	
+	@Autowired
+	DhlRouteRespository routeRespository;
 	
     @Value("${shipment.month}")
     private String shipmentMonth;
@@ -120,7 +126,49 @@ public class DatabaseReader implements Tasklet {
             logger.debug("findByActDt(): not found!");
         }
 
-        logger.debug(""); 
+        logger.debug("");
+        
+        List<String> vehicleTypes = Arrays.asList("Van", "Light Truck");
+        List<DhlRoute> routes = routeRespository.findByVehicleTypeIn(vehicleTypes);
+        
+        if(!routes.isEmpty()) {            
+            logger.debug("findByVehicleTypeIn(): found!");
+            routes.stream().forEach(route ->{
+            	logger.debug(route.getChromosomeId() + "\t" + route.getRouteId() + "\t" + route.getRoute());
+            });
+        } else {
+            logger.debug("findByVehicleTypeIn(): not found!");
+        }
+
+        logger.debug("");        
+        
+        routes.clear();
+        routes = routeRespository.findByVehicleTypeInOrderByChromosomeIdAsc(vehicleTypes);
+        
+        if(!routes.isEmpty()) {            
+            logger.debug("findByVehicleTypeInOrderByChromosomeIdAsc(): found!");
+            routes.stream().forEach(route ->{
+            	logger.debug(route.getChromosomeId() + "\t" + route.getRouteId() + "\t" + route.getRoute());
+            });
+        } else {
+            logger.debug("findByVehicleTypeInOrderByChromosomeIdAsc(): not found!");
+        }
+
+        logger.debug("");
+        
+        routes.clear();
+        routes = routeRespository.findByVehicleTypeInOrderByChromosomeIdDesc(vehicleTypes);
+        
+        if(!routes.isEmpty()) {            
+            logger.debug("findByVehicleTypeInOrderByChromosomeIdDesc(): found!");
+            routes.stream().forEach(route ->{
+            	logger.debug(route.getChromosomeId() + "\t" + route.getRouteId() + "\t" + route.getRoute());
+            });
+        } else {
+            logger.debug("findByVehicleTypeInOrderByChromosomeIdDesc(): not found!");
+        }
+
+        logger.debug("");
         logger.info("DatabaseReader: finished..");
 		
 		return RepeatStatus.FINISHED;
