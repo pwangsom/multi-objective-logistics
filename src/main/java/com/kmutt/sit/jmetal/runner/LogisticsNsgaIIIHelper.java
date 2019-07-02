@@ -19,6 +19,8 @@ public class LogisticsNsgaIIIHelper {
 	@Setter
 	private String jobId;
 	@Setter
+	private String shipmentDate;
+	@Setter
 	private String vehicleType;
 	
     @Value("${area.notfound.score}")
@@ -36,10 +38,5 @@ public class LogisticsNsgaIIIHelper {
     private List<DhlRoute> routeList;
     @Setter
     private Map<String, Integer> scoreMapping;
-    
-    @Setter
-    private DhlShipment[] shipmentSequence;
-    @Setter
-    private Map<Integer, DhlRoute> routeMapping;
 	
 }

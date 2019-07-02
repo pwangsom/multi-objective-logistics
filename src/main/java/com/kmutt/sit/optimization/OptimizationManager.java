@@ -56,9 +56,18 @@ public class OptimizationManager {
         
         // Operate shipments by date
         shipmentDateList.stream().forEach(date ->{
+        	helper.setShipmentDate(date);        	
+
         	// There are two types of shipments per day; shipment for van and bike.
-        	allocateDailyShipmentForVan(date);
-        	allocateDailyShipmentForBike(date);
+        	// Allocation shipment for van
+        	if(optimizationHelper.getVehicleTypes().contains("Van")) {
+            	allocateDailyShipmentForVan(date);
+        	}
+        	
+        	// Allocation shipment for bike
+        	if(optimizationHelper.getVehicleTypes().contains("Bike")) {
+            	allocateDailyShipmentForBike(date);        		
+        	}
         });
 
         logger.info("OptimizationManager: finished..");  
@@ -76,6 +85,7 @@ public class OptimizationManager {
 		
 		LogisticsNsgaIIIIntegerRunner runner = new LogisticsNsgaIIIIntegerRunner(helper);
 		runner.setRunnerParameter();
+		runner.execute();
 
         logger.info("allocateDailyShipmentForVan: finished..");  		
 	}
@@ -92,12 +102,14 @@ public class OptimizationManager {
 		
 		LogisticsNsgaIIIIntegerRunner runner = new LogisticsNsgaIIIIntegerRunner(helper);
 		runner.setRunnerParameter();
+		runner.execute();
 
         logger.info("allocateDailyShipmentForBike: finished..");  
 	}
 	
 	private void previewLogisticsOperate() {		
 		logger.debug("Job ID: " + helper.getJobId());
+		logger.debug("Shipment Date: " + helper.getShipmentDate());
 		logger.debug("Vehicle Type: " + helper.getVehicleType());
 		logger.debug("No. of Shipments: " + helper.getShipmentList().size());
 		logger.debug("No. of Available Routes: " + helper.getRouteList().size());

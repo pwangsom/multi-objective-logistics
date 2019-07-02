@@ -79,6 +79,7 @@ public class LogisticsPlanEvaluator {
 			eachVehicleScore[0] = determineEffortScoreOfEachVehicle(route, shipmentOfEachVehicleIdList);
 			
 			VehicleShipment vehicleShipment = new VehicleShipment();
+			vehicleShipment.setRoute(route);
 			vehicleShipment.setShipmentsInVehicle(shipmentOfEachVehicleIdList);
 			vehicleShipment.setUtilizationOfVehicle(eachVehicleUtil[0]);
 			vehicleShipment.setEffortScoreOfVehicle(eachVehicleScore[0]);
@@ -141,6 +142,7 @@ public class LogisticsPlanEvaluator {
 	@Getter
 	@Setter
 	public class VehicleShipment{
+		private DhlRoute route = new DhlRoute();
 		private List<DhlShipment> shipmentsInVehicle = new ArrayList<DhlShipment>();
 		private Integer utilizationOfVehicle = 0;
 		private Integer effortScoreOfVehicle = 0;

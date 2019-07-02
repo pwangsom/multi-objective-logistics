@@ -22,6 +22,8 @@ import com.kmutt.sit.jpa.respositories.DhlAreaRouteScoreRespository;
 import com.kmutt.sit.jpa.respositories.DhlRouteRespository;
 import com.kmutt.sit.jpa.respositories.DhlShipmentRepository;
 
+import lombok.Getter;
+
 @Service
 public class OptimizationHelper {
 
@@ -33,12 +35,17 @@ public class OptimizationHelper {
     @Value("${shipment.date}")
     private String shipmentDate;
     
+    @Value("${vehicle.types}")
+    private String vehicleType;
+    
     @Value("${vehicle.van}")
     private String vanType;
     
     @Value("${vehicle.bike}")
     private String bikeType;
     
+    @Getter
+    private List<String> vehicleTypes;
     private List<String> vanTypes;
     private List<String> bikeTypes;
     
@@ -59,6 +66,7 @@ public class OptimizationHelper {
     
     @PostConstruct
     private void postConstruct() {
+    	this.vehicleTypes = Arrays.asList(vehicleType.split(","));
     	this.vanTypes = Arrays.asList(vanType.split(","));
     	this.bikeTypes = Arrays.asList(bikeType.split(","));
     }

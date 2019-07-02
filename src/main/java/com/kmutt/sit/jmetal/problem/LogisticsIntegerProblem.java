@@ -9,7 +9,6 @@ import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import com.kmutt.sit.jmetal.runner.LogisticsNsgaIIIHelper;
-import com.kmutt.sit.utilities.JavaUtils;
 
 public class LogisticsIntegerProblem extends AbstractIntegerProblem {
 
@@ -53,9 +52,12 @@ public class LogisticsIntegerProblem extends AbstractIntegerProblem {
 		logger.debug("");
 		logger.debug("Start: Evaluate");
 		
-		solution.setObjective(0, JavaUtils.getRandomNumberInRange(solution.getLowerBound(0), solution.getUpperBound(0)));
-		solution.setObjective(1, JavaUtils.getRandomNumberInRange(solution.getLowerBound(0), solution.getUpperBound(0)));
-		solution.setObjective(2, JavaUtils.getRandomNumberInRange(solution.getLowerBound(0), solution.getUpperBound(0)));
+		LogisticsPlanEvaluator evaluator = new LogisticsPlanEvaluator(solution, helper);
+		evaluator.evaluate();
+		
+		solution.setObjective(0, evaluator.getNoOfCar());
+		solution.setObjective(1, evaluator.getUtilization());
+		solution.setObjective(2, evaluator.getEffortScore());
 		
 		logger.debug("");
 		logger.debug("Finished: Evaluate");
