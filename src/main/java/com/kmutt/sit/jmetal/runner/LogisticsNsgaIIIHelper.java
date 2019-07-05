@@ -32,6 +32,9 @@ public class LogisticsNsgaIIIHelper {
     @Value("${nsga.max.iteration}")
     private Integer maxIteration;
     
+    @Value("${nsga.reference.file}")
+    private String referenceFile;
+    
     @Setter
     private List<DhlShipment> shipmentList;
     @Setter
