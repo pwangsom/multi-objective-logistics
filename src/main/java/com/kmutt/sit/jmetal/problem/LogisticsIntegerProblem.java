@@ -24,6 +24,9 @@ public class LogisticsIntegerProblem extends AbstractIntegerProblem {
 	
 	public LogisticsIntegerProblem(LogisticsNsgaIIIHelper helper) {
 		
+		setNumberOfObjectives(NO_OBJECTIVES);
+		setName("LogisticsIntegerProblem");
+		
 		this.helper = helper;
 		
 		// Length of chromosome is equal to a number of shipments
