@@ -20,6 +20,7 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import com.kmutt.sit.jmetal.problem.LogisticsIntegerProblem;
+import com.kmutt.sit.utilities.JavaUtils;
 
 public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 
@@ -33,6 +34,7 @@ public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 	private AlgorithmRunner algorithmRunner;
 	
 	private int maxIteration = 300;
+	private String referenceParetoFront = "src/main/resources/NBI_3_12.pf";
 	
 	private LogisticsNsgaIIIHelper helper;
 	
@@ -53,6 +55,8 @@ public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 
 		selection = new BinaryTournamentSelection<IntegerSolution>();
 		maxIteration = this.helper.getMaxIteration();
+		
+		if(!JavaUtils.isNull(this.helper.getReferenceFile())) referenceParetoFront = this.helper.getReferenceFile();
 	}
 	
 	public void execute() {
