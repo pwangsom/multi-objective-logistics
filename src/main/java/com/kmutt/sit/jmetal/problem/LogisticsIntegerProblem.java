@@ -62,6 +62,9 @@ public class LogisticsIntegerProblem extends AbstractIntegerProblem {
 		solution.setObjective(1, evaluator.getUtilization());
 		solution.setObjective(2, evaluator.getEffortScore());
 		
+		logger.debug(String.format("[No.Of Cars: %d, Utilization: %d, Fammilarity: %d]", 
+				evaluator.getNoOfCar(), evaluator.getUtilization(), evaluator.getEffortScore()));
+		
 		logger.debug("");
 		logger.debug("Finished: Evaluate");
 	}

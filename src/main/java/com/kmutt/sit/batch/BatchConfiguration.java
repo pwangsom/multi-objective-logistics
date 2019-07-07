@@ -43,9 +43,10 @@ public class BatchConfiguration {
     	
         return jobs.get("processJob")
                 .incrementer(new RunIdIncrementer())
-                .start(readProperties())
-                .next(retrivePlayers())
-                .next(optimizeShipmentLogistics())
+                //.start(readProperties())
+                //.next(retrivePlayers())
+                //.next(optimizeShipmentLogistics())
+                .start(optimizeShipmentLogistics())
                 .build();
     }
     

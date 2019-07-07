@@ -49,6 +49,8 @@ public class LogisticsPlanEvaluator {
 		converToSolutionList();
 		determineNoOfCar();
 		mapShipmentsToVehicle();
+		
+		if(logger.isDebugEnabled()) printSolutionList();
 	}
 	
 	private void mapShipmentsToVehicle() {
@@ -132,11 +134,24 @@ public class LogisticsPlanEvaluator {
 			IntegerChromosome item = new IntegerChromosome();
 			item.setChromosomeIndex(i);
 			item.setChromosomeValue(solution.getVariableValue(i));
+			item.setShipment(helper.getShipmentList().get(i));
+			item.setRoute(helper.getRouteList().stream().filter(r -> r.getChromosomeId() == item.getChromosomeValue()).collect(Collectors.toList()).get(0));
 			
 			solutionList.add(item);			
 		}
 		
 		vehicleList = solutionList.stream().map(item -> item.getChromosomeValue()).distinct().sorted().collect(Collectors.toList());
+	}
+	
+	private void printSolutionList() {
+		solutionList.stream().forEach(s -> {
+			
+			String log = String.format("[index: %d, area: %d, id: %d, route: %s]", 
+					s.getChromosomeIndex(), s.getShipment().getAreaCode(), s.getChromosomeValue(), s.getRoute().getRoute());
+			
+			
+			logger.debug(log);
+		});
 	}
 	
 	@Getter
@@ -153,5 +168,7 @@ public class LogisticsPlanEvaluator {
 	public class IntegerChromosome{
 		private Integer chromosomeIndex;
 		private Integer chromosomeValue;
+		private DhlShipment shipment;
+		private DhlRoute route;
 	}
 }
