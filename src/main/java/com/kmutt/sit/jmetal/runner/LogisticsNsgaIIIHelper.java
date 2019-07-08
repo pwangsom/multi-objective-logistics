@@ -29,11 +29,14 @@ public class LogisticsNsgaIIIHelper {
     @Value("${area.utilization.min}")
     private Double minUtilization;
     
-    @Value("${nsga.max.iteration}")
-    private Integer maxIteration;
-    
     @Value("${nsga.reference.file}")
     private String referenceFile;
+
+    @Value("${nsga.max.run}")
+    private Integer maxRun;
+    
+    @Value("${nsga.max.iteration}")
+    private Integer maxIteration;
     
     @Setter
     private List<DhlShipment> shipmentList;
@@ -41,5 +44,7 @@ public class LogisticsNsgaIIIHelper {
     private List<DhlRoute> routeList;
     @Setter
     private Map<String, Integer> scoreMapping;
+    @Setter
+    private Integer currentRun;
 	
 }

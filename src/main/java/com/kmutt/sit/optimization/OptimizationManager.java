@@ -44,33 +44,42 @@ public class OptimizationManager {
 	
 	public void opitmize() {
 		
-        logger.info("OptimizationManager: start....."); 
-        
-        logger.info("Job ID: " + jobId);
-        
+        logger.info("OptimizationManager: Job ID: " + jobId + "\t start....."); 
+                
         prepareInformation();
         
         List<String> shipmentDateList = optimizationHelper.retrieveShipmentDateList();
         
         logger.info(shipmentDateList.toString());
         
-        // Operate shipments by date
-        shipmentDateList.stream().forEach(date ->{
-        	helper.setShipmentDate(date);        	
-
-        	// There are two types of shipments per day; shipment for van and bike.
-        	// Allocation shipment for van
-        	if(optimizationHelper.getVehicleTypes().contains("Van")) {
-            	allocateDailyShipmentForVan(date);
-        	}
+        Integer maxRun = helper.getMaxRun();
+        
+        // Operate each run
+        for(int i = 1; i <= maxRun; i++) {        
+            logger.info("Run No.: " + i + "\t starting....");
+            
+            helper.setCurrentRun(i);
         	
-        	// Allocation shipment for bike
-        	if(optimizationHelper.getVehicleTypes().contains("Bike")) {
-            	allocateDailyShipmentForBike(date);        		
-        	}
-        });
+            // Operate shipments by date
+            shipmentDateList.stream().forEach(date ->{
+            	helper.setShipmentDate(date);        	
 
-        logger.info("OptimizationManager: finished..");  
+            	// There are two types of shipments per day; shipment for van and bike.
+            	// Allocation shipment for van
+            	if(optimizationHelper.getVehicleTypes().contains("Van")) {
+                	allocateDailyShipmentForVan(date);
+            	}
+            	
+            	// Allocation shipment for bike
+            	if(optimizationHelper.getVehicleTypes().contains("Bike")) {
+                	allocateDailyShipmentForBike(date);        		
+            	}
+            });
+            
+            logger.info("Run No.: " + i + "\t finished..");
+        }
+
+        logger.info("OptimizationManager:: Job ID: " + jobId + "\t finished..");  
 	}
 	
 	private void allocateDailyShipmentForVan(String shipmentDate) {
