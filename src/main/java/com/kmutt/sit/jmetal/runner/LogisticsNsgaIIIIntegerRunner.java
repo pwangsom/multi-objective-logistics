@@ -22,6 +22,8 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import com.kmutt.sit.jmetal.problem.LogisticsIntegerProblem;
 import com.kmutt.sit.utilities.JavaUtils;
 
+import lombok.Getter;
+
 public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 
 	private Logger logger = LoggerFactory.getLogger(LogisticsNsgaIIIIntegerRunner.class);
@@ -37,6 +39,9 @@ public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 	private String referenceParetoFront = "src/main/resources/NBI_3_12.pf";
 	
 	private LogisticsNsgaIIIHelper helper;
+	
+	@Getter
+	private List<IntegerSolution> population;
 	
 	public LogisticsNsgaIIIIntegerRunner(LogisticsNsgaIIIHelper helper) {
 		this.helper = helper;
@@ -70,7 +75,7 @@ public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 
 	    algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 	    
-	    List<IntegerSolution> population = algorithm.getResult();
+	    population = algorithm.getResult();
 	    long computingTime = algorithmRunner.getComputingTime();
 	    
 	    new SolutionListOutput(population)

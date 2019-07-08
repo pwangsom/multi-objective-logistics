@@ -95,7 +95,7 @@ public class OptimizationManager {
 		helper.setVehicleType("Van");
 		helper.setShipmentList(shipmentList);
 		helper.setRouteList(vanList);
-		
+
 		runNsgaIII();
 
         logger.info("allocateDailyShipmentForVan: finished..");  		
@@ -118,9 +118,13 @@ public class OptimizationManager {
 		
 		if(logger.isDebugEnabled()) previewLogisticsOperate();
 		
-		LogisticsNsgaIIIIntegerRunner runner = new LogisticsNsgaIIIIntegerRunner(helper);
-		runner.setRunnerParameter();
-		runner.execute();
+		
+        // Allocate each run
+        for(int i = 1; i <= helper.getMaxRun(); i++) {    		
+    		LogisticsNsgaIIIIntegerRunner runner = new LogisticsNsgaIIIIntegerRunner(helper);
+    		runner.setRunnerParameter();
+    		runner.execute();
+        }
 		
 		// Insert table logistics_job_problem
 		initialLogisticsJobProblem();		
