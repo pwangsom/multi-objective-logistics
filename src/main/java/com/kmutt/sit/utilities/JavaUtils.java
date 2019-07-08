@@ -29,4 +29,8 @@ public class JavaUtils {
 	public static boolean between(int i, int minValueInclusive, int maxValueInclusive) {
 	    return (i >= minValueInclusive && i <= maxValueInclusive);
 	}
+	
+	public static String removeStringOfList(String string) {
+		return string.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "");
+	}
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +19,15 @@ import org.springframework.stereotype.Service;
 import com.kmutt.sit.jpa.entities.DhlAreaRouteScore;
 import com.kmutt.sit.jpa.entities.DhlRoute;
 import com.kmutt.sit.jpa.entities.DhlShipment;
+import com.kmutt.sit.jpa.entities.LogisticsJob;
+import com.kmutt.sit.jpa.entities.LogisticsJobProblem;
+import com.kmutt.sit.jpa.entities.LogisticsJobResult;
 import com.kmutt.sit.jpa.respositories.DhlAreaRouteScoreRespository;
 import com.kmutt.sit.jpa.respositories.DhlRouteRespository;
 import com.kmutt.sit.jpa.respositories.DhlShipmentRepository;
+import com.kmutt.sit.jpa.respositories.LogisticsJobProblemRepository;
+import com.kmutt.sit.jpa.respositories.LogisticsJobRepository;
+import com.kmutt.sit.jpa.respositories.LogisticsJobResultRepository;
 
 import lombok.Getter;
 
@@ -58,6 +65,16 @@ public class OptimizationHelper {
     
     @Autowired
     private DhlRouteRespository dhlRouteRespository;
+    
+
+    @Autowired
+    private LogisticsJobRepository logisticsJobRepository;
+    
+    @Autowired
+    private LogisticsJobProblemRepository logisticsJobProblemRepository;
+    
+    @Autowired
+    private LogisticsJobResultRepository logisticsJobResultRepository;
 
     private List<String> shipmentDateList;
     
@@ -95,6 +112,21 @@ public class OptimizationHelper {
     	Collections.sort(this.shipmentDateList);
     	
     	return this.shipmentDateList;
+    }
+    
+    public void saveLogisticsJob(LogisticsJob job) {
+    	logisticsJobRepository.save(job);
+    }
+    
+    public LogisticsJobProblem saveLogisticsJobProblem(LogisticsJobProblem problem) {
+    	LogisticsJobProblem persistProblem = logisticsJobProblemRepository.save(problem);
+    	logisticsJobProblemRepository.flush();
+    	return persistProblem;
+    }
+    
+    @Transactional
+    public void saveLogisticsJobResult(List<LogisticsJobResult> results) {    
+    	logisticsJobResultRepository.saveAll(results);
     }
     
     public List<DhlShipment> retrieveDailyShipment(String shipmentDate){

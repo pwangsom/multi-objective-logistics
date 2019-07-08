@@ -41,7 +41,7 @@ public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 	private LogisticsNsgaIIIHelper helper;
 	
 	@Getter
-	private List<IntegerSolution> population;
+	private List<IntegerSolution> solutions;
 	
 	public LogisticsNsgaIIIIntegerRunner(LogisticsNsgaIIIHelper helper) {
 		this.helper = helper;
@@ -75,10 +75,10 @@ public class LogisticsNsgaIIIIntegerRunner extends AbstractAlgorithmRunner {
 
 	    algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 	    
-	    population = algorithm.getResult();
+	    solutions = algorithm.getResult();
 	    long computingTime = algorithmRunner.getComputingTime();
 	    
-	    new SolutionListOutput(population)
+	    new SolutionListOutput(solutions)
 	        .setSeparator("\t")
 	        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
 	        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))

@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.kmutt.sit.utilities.JavaUtils;
+
 public class DummyTest {
 	
 
@@ -33,6 +35,9 @@ public class DummyTest {
 		
 		Integer minUtil = (int) Math.round(max * minRate);
 		logger.info("minUtil:= " + minUtil);
+		
+		String test = "[1, 2, 3, 4, 5]";
+		logger.info("test replace: " + JavaUtils.removeStringOfList(test));
 	}
 	
 }
