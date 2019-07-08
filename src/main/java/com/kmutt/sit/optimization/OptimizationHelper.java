@@ -35,8 +35,9 @@ public class OptimizationHelper {
     @Value("${shipment.date}")
     private String shipmentDate;
     
+    @Getter
     @Value("${vehicle.types}")
-    private String vehicleType;
+    private String vehicleTypes;
     
     @Value("${vehicle.van}")
     private String vanType;
@@ -45,7 +46,7 @@ public class OptimizationHelper {
     private String bikeType;
     
     @Getter
-    private List<String> vehicleTypes;
+    private List<String> vehicleTypeList;
     private List<String> vanTypes;
     private List<String> bikeTypes;
     
@@ -66,7 +67,7 @@ public class OptimizationHelper {
     
     @PostConstruct
     private void postConstruct() {
-    	this.vehicleTypes = Arrays.asList(vehicleType.split(","));
+    	this.vehicleTypeList = Arrays.asList(vehicleTypes.split(","));
     	this.vanTypes = Arrays.asList(vanType.split(","));
     	this.bikeTypes = Arrays.asList(bikeType.split(","));
     }
