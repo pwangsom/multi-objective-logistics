@@ -140,14 +140,42 @@ public class OptimizationManager {
         
         List<IntegerSolution> paretoSet = SolutionListUtils.getNondominatedSolutions(solutions);
         Front referenceFront = new ArrayFront(paretoSet);
-        FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
+        FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);            
         @SuppressWarnings("unchecked")
 		List<PointSolution> normalizedParetoSet = (List<PointSolution>) frontNormalizer.normalize(paretoSet);
 		
 		// Insert table logistics_job_problem
         LogisticsJobProblem problem = saveLogisticsJobProblem(paretoSet.size());
         
-        saveLogisticsJobResults(problem.getProblemId(), paretoSet, normalizedParetoSet);
+        saveLogisticsJobResults(problem.getProblemId(), paretoSet, normalizedParetoSet) ;
+	}
+	
+	private void saveLogisticsJobResults(Integer problemId, List<IntegerSolution> paretoSet) {
+		
+		List<LogisticsJobResult> results = new ArrayList<LogisticsJobResult>();
+		
+		
+		IntStream.range(0, paretoSet.size()).forEach(i -> {
+			LogisticsJobResult result = new LogisticsJobResult();
+			result.setProblemId(problemId);
+			result.setSolutionIndex(i);
+			
+			IntegerSolution paretoSolution = paretoSet.get(i);			
+			String routeList = JavaUtils.removeStringOfList(getSolutionString(paretoSolution));
+			result.setSolutionDetail(routeList);			
+			result.setObjective1(BigDecimal.valueOf(paretoSolution.getObjective(0)));
+			result.setObjective2(BigDecimal.valueOf(paretoSolution.getObjective(1)));
+			result.setObjective3(BigDecimal.valueOf(paretoSolution.getObjective(2)));
+			
+			result.setNormalizedObjective1(BigDecimal.valueOf(0.0));
+			result.setNormalizedObjective2(BigDecimal.valueOf(0.0));
+			result.setNormalizedObjective3(BigDecimal.valueOf(0.0));
+			
+
+			results.add(result);
+		});
+		
+		optimizationHelper.saveLogisticsJobResult(results);
 	}
 	
 	private void saveLogisticsJobResults(Integer problemId, List<IntegerSolution> paretoSet, List<PointSolution> normalizedParetoSet) {

@@ -104,7 +104,7 @@ public class LogisticsPlanEvaluator {
 		if(noOfShipment < minUtil) {
 			util = minUtil - noOfShipment;
 		} else if(noOfShipment > route.getMaxUtilization()) {
-			util = (route.getMaxUtilization() - noOfShipment) * 2;
+			util = (noOfShipment - route.getMaxUtilization()) * 2;
 		}
 
 		return util;
