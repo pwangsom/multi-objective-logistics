@@ -16,9 +16,9 @@ import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.point.util.PointSolution;
 
+import com.kmutt.sit.jmetal.front.ExtendedFrontNormalizer;
 import com.kmutt.sit.jmetal.runner.LogisticsNsgaIIIHelper;
 import com.kmutt.sit.jmetal.runner.LogisticsNsgaIIIIntegerRunner;
 import com.kmutt.sit.jpa.entities.DhlRoute;
@@ -140,7 +140,7 @@ public class OptimizationManager {
         
         List<IntegerSolution> paretoSet = SolutionListUtils.getNondominatedSolutions(solutions);
         Front referenceFront = new ArrayFront(paretoSet);
-        FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);            
+        ExtendedFrontNormalizer frontNormalizer = new ExtendedFrontNormalizer(referenceFront);            
         @SuppressWarnings("unchecked")
 		List<PointSolution> normalizedParetoSet = (List<PointSolution>) frontNormalizer.normalize(paretoSet);
 		
