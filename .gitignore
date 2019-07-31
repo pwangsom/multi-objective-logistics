@@ -33,6 +33,9 @@ bin
 target
 build/
 .gradle
+logs
+.gradle/
+**/.gradle/
 
 # Eclipse Project Files #
 
