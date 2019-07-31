@@ -1,0 +1,16 @@
+Calculate familiarity
+
+= Area Responsibility + History Frequently Delivery + Compactness of Area of Actual Delivery Shipment
+
+Area Responsibility
+= 1 if the area is in the Responsibility
+= 0.5 if the area is not in the Responsibility but connected to the area is in the Responsibility
+= 0 if the area is not in the Responsibility and not connected to the area is in the Responsibility
+
+
+History Frequently Delivery
+= The summation of (The number of shipments of the area / The number of shipments of the most visit area)
+
+
+Compactness of Area of Actual Delivery Shipment
+= 1 - (Area of Actual Delivery Shipment / Area of All Shipment)
